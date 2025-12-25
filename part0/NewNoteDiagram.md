@@ -1,8 +1,7 @@
 My first flow chart using mermaid on Github:
 
 ```mermaid
-<<<<<<< HEAD
-sequenceDiagram:
+sequenceDiagram
 
     participant browser
     participant server
@@ -36,11 +35,4 @@ sequenceDiagram:
 
     Note right of browser: The browser invokes the callback function that renders the notes
 
-=======
-graph TD;
-    A->>B;
-    A->>C;
-    B->>D;
-    C->>D;
->>>>>>> 351fe24f4a0e2bb9544c9c91e258f7192e2f4670
 ```
