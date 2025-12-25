@@ -2,10 +2,8 @@
 
 sequenceDiagram
 
-    participant Browser
-    participant Server
-    
-    Note right of browser: When save button is pressed the browser invokes a callback funtion and post the contents to the address
+    participant browser
+    participant server
 
     browser->>server: POST [{"content": "Bonjour", "date": "2025-1-1"}] https://studies.cs.helsinki.fi/exampleapp/new_note_spa
     activate server
