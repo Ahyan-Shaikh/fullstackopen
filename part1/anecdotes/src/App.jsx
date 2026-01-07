@@ -20,6 +20,7 @@ const App = () => {
     const n = anecdotes.length
     return Math.floor(Math.random() * n)
   }
+  
   const handleSelected= () =>{
     const newSelected = generateRandomNumber()
     setSelected(newSelected)
@@ -28,34 +29,24 @@ const App = () => {
     const newVotes = [...votes]
     newVotes[selected]+=1
     setVotes(newVotes)
+
+    // This takes latest votes
+    const newMaxVote = getMaxVote(newVotes)
+    setMaxVote(newMaxVote)
   }
 
-  /*
-    This function check's if state has been modified from last update or not, preventing from inifinte re-renders
-  */
-  const updateMaxVotes = () => {
-
-    const currMax = getMaxVote()
-    if (!(maxVote == currMax)) {
-      setMaxVote(getMaxVote())
-    }
-
-  }
-
-  const getMaxVote = () => {
+  const getMaxVote = (updatedVotes) => {
     let max = maxVote;
-    const n = votes.length
+    const n = updatedVotes.length
     let i;
     for (i = 1; i < n; i++) {
-      if (votes[i] > votes[max]) {
+      if (updatedVotes[i] > updatedVotes[max]) {
         max = i
       }
     }
     return max
   }
 
-  updateMaxVotes()
-  
  return (
     <div>
       <h1>Anecdote of the day</h1>
