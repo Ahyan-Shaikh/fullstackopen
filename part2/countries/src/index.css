@@ -7,3 +7,7 @@ img, svg, picture {
 .flag {
     width: 12rem;
 }
+
+.icon {
+    width: 50px;
+}

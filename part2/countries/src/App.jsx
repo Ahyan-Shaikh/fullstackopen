@@ -15,104 +15,137 @@ function SearchCountries({ filterCountry, onChangeCountryChange }) {
   )
 }
 
-function Country({filtered, initialShowValue}) {
+function Weather({weather, city}) {
+  if (!weather){
+    return null
+  }
 
-  const [show, setShow] = useState(initialShowValue)
-  const [weather, setWeather] = useState({})
-  const country = filtered
-  const languages = []
+  const celcius = weather.main.temp - 273.15;
+
+  return (
+    <div>
+      <h2>Weather in {city}</h2>
+      <p>Temperature {celcius.toPrecision(3)} Celsius</p>
+      <img className='icon'src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}.png`} alt="" />
+      <p> Wind {weather.wind.speed} m/s</p>
+    </div>
+  )
+}
+
+function FilterableCountriesData({countries, filterText}) {
+  if (filterText === '') {
+    return null;
+  }
+
+  // list of countries that mataches the filterText
+  const filteredCountries = []
+
+  countries.forEach((country, index) => {
+    let name = country.name.common
+    if (
+      name.toLowerCase().indexOf(
+        filterText.toLowerCase()) === -1) {
+      return;
+    }
+    filteredCountries.push(country);
+  });
+
+  // if no country is founc just return nothing
+
+  if (filteredCountries.length === 0) {
+    return null;
+  } else if (filteredCountries.length > 10) {
+    return <p>Too many matches, please specify another filter</p>
+  }
+  return < CountriesList countries={filteredCountries} />
+}
+
+function CountriesList({countries}) {
+
+  const totalCountries = countries.length;
+
+  const [showInfo, setShowInfo] = useState(Array(totalCountries).fill(false));
+
+  console.log(showInfo)
+  if (totalCountries > 1 && totalCountries <= 10) {
+    return (
+      <>
+        {
+        countries.map((country, index) => {
+
+          return (showInfo[index]
+                    ? <Country key={index} country={country}/>
+                    : <p key={index}>
+                        {country.name.common}
+                        <button onClick={() => {
+                          const updatedShowInfo = [...showInfo]
+                          updatedShowInfo[index] = true
+                          setShowInfo(updatedShowInfo)
+                        }}>
+                          show
+                        </button>
+                      </p>
+                  )})
+        
+        }
+      </>
+    )
+  }
+  return <Country country={countries[0]} />
+}
+
+function Country({country}) {
+  const [weather, setWeather] = useState(null);
+  const [lat, lon] = country.capitalInfo.latlng;
 
   useEffect(() => {
-    if (show) {
-      const api_key = import.meta.env.VITE_SOME_KEY
-      const baseUrl = `https://api.openweathermap.org/data/2.5/weather?q=${country.capital}&appid=${api_key}`
-    
-
+    const api_key = import.meta.env.VITE_SOME_KEY
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_key}`
+      
       axios
-      .get(baseUrl)
-      .then(response => {
-        setWeather(response.data)
-        console.log(response.data.weather)
-      })
-      .catch(error => {
-        console.log(error)
-      })
-    }
-
+        .get(url)  
+        .then(response => {
+          console.log(response.data)
+          setWeather(response.data)
+        })
+        .catch(error => {
+          console.log('Unable to fetch weather')
+        })
   }, [])
 
+  const languages = []
   for (let key in country.languages) {
     languages.push(country.languages[key])
   }
 
-  const label = show ? 'hide' : 'show'
-
-  if (!show) {
-    return (
+  return (
       <div>
-        {country.name.common}
-        <button onClick={() => setShow(!show)}>{label}</button>
-      </div>
-    )
-  }
+        <h1>{country.name.common}</h1>       
+        <div>
+          Capital {country.capital}
+          <br />
+          Area {country.area}
+        </div>
 
-  
-  console.log(weather)
-  return <div>
-    <h1>{country.name.common}</h1>
-    <div>
-      Capital {country.capital}
-      <br />
-      Area {country.area}
+     <h2>Languages</h2>
+      <ul>
+       {
+          languages.map(language => <li key={language}>{language}</li>)
+       }
+      </ul>
+      <picture className='flag'>
+        <img src={`${country.flags.svg}`} alt={`${country.flags.alt}`} />
+      </picture>
+
+      <Weather weather={weather} city={country.capital}/>
     </div>
-
-    <h2>Languages</h2>
-    <ul>
-      {
-        languages.map(language => <li key={language}>{language}</li>)
-      }
-    </ul>
-    <picture className='flag'>
-      <img src={`${country.flags.svg}`} alt={`${country.flags.alt}`} />
-    </picture>
-
-    <h2>Weather in {country.capital}</h2>
-    {/* <p>Temperature {weather.main.temperature}</p> */}
-  </div>
-}
-
-function DisplayCountries({ countries, filterCountry, findMatching }) {
-
-  const filteredCountries = [];
- 
-  if (filterCountry === '') {
-    return null
-  }
-
-  countries.forEach(country => {
-    if (findMatching(country.name.common, filterCountry) === 1) {
-      filteredCountries.push(country)
-    }
-  })
-
-  if (filteredCountries.length > 10) {
-    return <p>Too may matches, specify another filter </p>
-  }
-
-  if (filteredCountries.length === 1) {
-    return <Country filtered={filteredCountries[0]} initialShowValue={true}/>
-  }
-
-  return (<div>
-
-   { filteredCountries.map((filteredCountry,index) => <Country key={index} filtered={filteredCountry} initialShowValue={false}/>)}
-  </div>)
+    )
 }
 
 const App = () => {
   
   const [countries, setCountries] = useState(null)
-  const [filterCountry, setFilterCountry] = useState('')
+  const [filterText, setFilterText] = useState('')
 
   useEffect(() => {
     const url = 'https://studies.cs.helsinki.fi/restcountries/api'
@@ -126,36 +159,10 @@ const App = () => {
       })
   }, [])
 
-
-  const searchCountry = (countryName, pattern) => {
-
-    const countryNameLen = countryName.length
-    const patternLen = pattern.length
-
-    const cName = countryName.toString().toLowerCase()
-    const patt = pattern.toString().toLowerCase()
-
-    let i, j
-    for (i = 0, j = 0; i < countryNameLen; i++) {
-
-      while (j < patternLen) {
-        if (cName[i+j] === patt[j]) {
-          j++
-        } else {
-          j = 0
-          break
-        }
-        
-      }
-    }
-    return j >= patternLen ? 1: 0
-  }
-
-
   return (
     <div>
-      <SearchCountries filterCountry={filterCountry} onChangeCountryChange={setFilterCountry}/>
-      <DisplayCountries countries={countries} filterCountry={filterCountry} findMatching={searchCountry}/>
+      <SearchCountries filterText={filterText} onChangeCountryChange={setFilterText}/>
+      <FilterableCountriesData countries={countries} filterText={filterText}/>
     </div>
   )
 }
