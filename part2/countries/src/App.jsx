@@ -15,22 +15,6 @@ function SearchCountries({ filterCountry, onChangeCountryChange }) {
   )
 }
 
-function Weather({weather, city}) {
-  if (!weather){
-    return null
-  }
-
-  const celcius = weather.main.temp - 273.15;
-
-  return (
-    <div>
-      <h2>Weather in {city}</h2>
-      <p>Temperature {celcius.toPrecision(3)} Celsius</p>
-      <img className='icon'src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}.png`} alt="" />
-      <p> Wind {weather.wind.speed} m/s</p>
-    </div>
-  )
-}
 
 function FilterableCountriesData({countries, filterText}) {
   if (filterText === '') {
@@ -141,6 +125,22 @@ function Country({country}) {
     </div>
     )
 }
+function Weather({weather, city}) {
+  if (!weather){
+    return null
+  }
+  const celcius = weather.main.temp - 273.15;
+
+  return (
+    <div>
+      <h2>Weather in {city}</h2>
+      <p>Temperature {celcius.toPrecision(3)} Celsius</p>
+      <img className='icon'src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}.png`} alt="" />
+      <p> Wind {weather.wind.speed} m/s</p>
+    </div>
+  )
+}
+
 
 const App = () => {
   
