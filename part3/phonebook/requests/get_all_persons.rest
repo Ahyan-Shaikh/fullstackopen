@@ -1,0 +1,5 @@
+GET http://localhost:3001/api/persons/
+
+###
+# to test unkown endpoint middleware
+GET http://localhost:3001/api/pearsons
