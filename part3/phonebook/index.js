@@ -8,7 +8,7 @@ const PORT = 3001
 app.use(express.json())
 app.use(cors())
 
-const logger = (tokens,request, response) => {
+app.use(morgan((tokens,request, response) => {
     morgan.token('body', function(req, res) { return JSON.stringify(req.body) })
     return [
         tokens.method(request, response),
@@ -18,8 +18,7 @@ const logger = (tokens,request, response) => {
         tokens['response-time'](request, response), 'ms',
         tokens.body(request, response)
     ].join(' ')
-}
-app.use(morgan(logger))
+}))
 
 let persons = [
     {
@@ -78,8 +77,7 @@ app.delete('/api/persons/:id', (request, response) => {
     const id = request.params.id;
 
     persons = persons.filter(person => person.id !== id)
-    response.status(204)
-    
+    response.status(204).end();
 })
 
 app.post('/api/persons/', (request, response) => {

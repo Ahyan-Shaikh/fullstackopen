@@ -1,1 +1,5 @@
 DELETE http://localhost:3001/api/persons/2
+
+###
+# test delete on deployed backend
+DELETE https://phonebook-cgze.onrender.com/api/persons/4
