@@ -3,9 +3,8 @@ content-type: application/json
 
 {
     "name": "Marta Williams",
-    "number": "1-125343443"
+    "number": "33-12-3236643"
 }
-
 
 ###
 # testing post on deployed backend
@@ -13,6 +12,6 @@ POST https://phonebook-cgze.onrender.com/api/persons
 content-type: application/json
 
 {
-    "name": "Brian Wheeler",
-    "number": "44-1234664554"
+    "name": "Marta Williams",
+    "number": "33-123236643"
 }
