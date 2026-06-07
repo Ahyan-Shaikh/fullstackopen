@@ -1,0 +1,9 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "title": "Take Control Of Your AI Voyage — Your Customers Deserve It",
+  "author": "Sharyn Leaver",
+  "url": "https://www.forrester.com/blogs/take-control-of-your-ai-voyage/",
+  "likes": 199
+}

@@ -1,0 +1,19 @@
+{
+  "name": "bloglist",
+  "version": "1.0.0",
+  "description": "",
+  "license": "MIT",
+  "author": "'Shaikh, Ahyan'",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongoose": "^9.6.3",
+    "morgan": "^1.11.0"
+  }
+}
