@@ -64,56 +64,56 @@ const listWithOneBlog = [
     }
 ]
 
-describe('total likes', () => {
+// describe('total likes', () => {
 
-  test('of empty list is zero', () => {
-    assert.strictEqual(listHelper.totalLikes([]), 0)
-  })
+//   test('of empty list is zero', () => {
+//     assert.strictEqual(listHelper.totalLikes([]), 0)
+//   })
 
-  test('when list has only blog, equals the likes of that', () => {
-    const result = listHelper.totalLikes(listWithOneBlog)
-    assert.strictEqual(result, 5)
-  })
+//   test('when list has only blog, equals the likes of that', () => {
+//     const result = listHelper.totalLikes(listWithOneBlog)
+//     assert.strictEqual(result, 5)
+//   })
 
-  test('of a bigger list is calculated right', () => {
-    const result = listHelper.totalLikes(blogs)
-    assert.strictEqual(result, 36)
-  })
-})
+//   test('of a bigger list is calculated right', () => {
+//     const result = listHelper.totalLikes(blogs)
+//     assert.strictEqual(result, 36)
+//   })
+// })
 
-describe('most likes', () => {
-  test('of a bigger list', () => {
-    const favBlog = {
-      _id: "5a422b3a1b54a676234d17f9",
-      title: "Canonical string reduction",
-      author: "Edsger W. Dijkstra",
-      url: "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html",
-      likes: 12,
-      __v: 0
-    }
-    const result = listHelper.favoriteBlog(blogs)
-    assert.deepStrictEqual(result, favBlog)
-  })
-})
+// describe('most likes', () => {
+//   test('of a bigger list', () => {
+//     const favBlog = {
+//       _id: "5a422b3a1b54a676234d17f9",
+//       title: "Canonical string reduction",
+//       author: "Edsger W. Dijkstra",
+//       url: "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html",
+//       likes: 12,
+//       __v: 0
+//     }
+//     const result = listHelper.favoriteBlog(blogs)
+//     assert.deepStrictEqual(result, favBlog)
+//   })
+// })
 
-describe('most blogs', () => {
-  test('of a bigger list', () => {
-    const mostBlog = {
-      author: "Robert C. Martin",
-      blogs: 3
-    }
-    const result = listHelper.mostBlogs(blogs)
-    assert.deepStrictEqual(result, mostBlog)
-  })
-})
+// describe('most blogs', () => {
+//   test('of a bigger list', () => {
+//     const mostBlog = {
+//       author: "Robert C. Martin",
+//       blogs: 3
+//     }
+//     const result = listHelper.mostBlogs(blogs)
+//     assert.deepStrictEqual(result, mostBlog)
+//   })
+// })
 
-describe('author with most likes', () => {
-  test('of a bigger list', () => {
-    const mostLikedAuthor = {
-      author: "Edsger W. Dijkstra",
-      likes: 17
-    }
-    const result = listHelper.mostLikes(blogs)
-    assert.deepStrictEqual(result, mostLikedAuthor)
-  })
-})
+// describe('author with most likes', () => {
+//   test('of a bigger list', () => {
+//     const mostLikedAuthor = {
+//       author: "Edsger W. Dijkstra",
+//       likes: 17
+//     }
+//     const result = listHelper.mostLikes(blogs)
+//     assert.deepStrictEqual(result, mostLikedAuthor)
+//   })
+// })

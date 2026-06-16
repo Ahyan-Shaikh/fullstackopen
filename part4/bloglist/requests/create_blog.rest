@@ -1,9 +1,10 @@
-POST http://localhost:3003/api/blogs
+POST http://localhost:3003/api/blogs/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5lZCIsImlkIjoiNmEyZGIwYTg0NTUyZjAyNjZlMmRhNmI1IiwiaWF0IjoxNzgxMzc5NzIwfQ.aOwEXH6cwUWSDtib9jEQDVLkKXqQqFXcSuTOEKcQmOA
 Content-Type: application/json
 
 {
-  "title": "Take Control Of Your AI Voyage — Your Customers Deserve It",
-  "author": "Sharyn Leaver",
-  "url": "https://www.forrester.com/blogs/take-control-of-your-ai-voyage/",
-  "likes": 199
+  "title": "Javascript is dead",
+  "author": "Amaresh Adak",
+  "url": "https://medium.com/the-syntax-diaries/javascript-is-dead-again-but-heres-why-it-s-still-unstoppable-0b4569c71b86",
+  "likes": 69
 }
